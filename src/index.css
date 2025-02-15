@@ -1,0 +1,13 @@
+@import "../clash-display.css";
+@import "../satoshi.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.shimmer-container {
+  @apply animate-pulse;
+}
+
+.dark-input {
+  @apply dark:bg-rich_black-700 dark:border-none dark:outline-none dark:caret-white dark:text-stone-100;
+}
