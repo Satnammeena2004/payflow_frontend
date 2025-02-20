@@ -14,7 +14,7 @@ const UserSearch = ({selecetedReceiver, setSelectedReceiver}) => {
       if (recipient || recipient.length > 1) {
         setRealFilter(recipient);
       }
-    }, 400);
+    }, 300);
 
     return () => {
       clearTimeout(timer);
@@ -51,7 +51,7 @@ const UserSearch = ({selecetedReceiver, setSelectedReceiver}) => {
             value={recipient}
             onFocus={() => setFocus(true)}
             onChange={handleChange}
-            onBlur={() => setTimeout(() => setFocus(false), 500)}
+            onBlur={() => setTimeout(() => setFocus(false), 300)}
             className={`block w-full ${
               selecetedReceiver ? "pl-28" : "pl-10"
             } pr-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500  dark-input`}

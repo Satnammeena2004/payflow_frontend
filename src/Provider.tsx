@@ -6,7 +6,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
     <SWRConfig
       value={{
         fetcher,
-        revalidateOnFocus:false,
+        revalidateOnFocus:true,
         errorRetryCount:2,
         loadingTimeout:3000
         

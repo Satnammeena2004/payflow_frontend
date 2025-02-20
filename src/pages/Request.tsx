@@ -95,7 +95,7 @@ const Request = ({
           amount: +requestType.amount,
           sender_account_id: requestType.sender_account_id,
           receiver_account_id: requestType.receiver_account_id,
-          type: "regular",
+          type: "borrow",
         }
       );
       if (data.success) {

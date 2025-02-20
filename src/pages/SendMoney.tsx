@@ -5,9 +5,13 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { ArrowRight, AlertCircle, CheckCircle2 } from "lucide-react";
+import { ArrowRight, AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useBulkUserByFilter, useUser } from "../services/queries";
+import {
+  useBulkUserByFilter,
+  useTransations,
+  useUser,
+} from "../services/queries";
 import { User } from "../types";
 import UserSearch from "../components/UserSearch";
 import { axiosInstance } from "../services/fetcher";
@@ -85,6 +89,7 @@ export default function SendMoney() {
     note: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
   // const [focus, setFocus] = useState(false);
@@ -104,6 +109,7 @@ export default function SendMoney() {
       setStep(2);
     } else {
       // Add send money logic here
+      setIsLoading(true);
       const res = await axiosInstance.post("/account/transfer", {
         amount: +formData.amount,
         sender_account_id: data?.data?.user.account_id._id,
@@ -116,6 +122,8 @@ export default function SendMoney() {
         setError("Failed to transfer money");
       } else {
         setIsSuccess(true);
+
+        setIsLoading(false);
         setError("");
       }
     }
@@ -309,10 +317,19 @@ export default function SendMoney() {
                 )}
                 {!error && (
                   <button
+                  disabled={isLoading}
                     type="submit"
                     className="flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 ml-auto"
                   >
-                    {step === 1 ? "Continue" : "Send Money"}
+                    {step === 1 ? (
+                      "Continue"
+                    ) : (
+                      <div className=" flex items-center gap-x-2">
+                        {" "}
+                        {isLoading && <Loader2 className="animate-spin" />}{" "}
+                        <span>Send Money</span>
+                      </div>
+                    )}
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </button>
                 )}
