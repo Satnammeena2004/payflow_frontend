@@ -8,6 +8,7 @@ import Provider from "./Provider.tsx";
 import { BrowserRouter as Router } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import ThemeProvider from "./context/ThemeContext.tsx";
+import {ToggleProvider} from "./context/ToggleMenuContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -16,7 +17,9 @@ createRoot(document.getElementById("root")!).render(
         <ErrorBoundary fallback={<ErrorPage />}>
           <Provider>
             <AuthStateProvider>
-              <App />
+              <ToggleProvider>
+                <App />
+              </ToggleProvider>
             </AuthStateProvider>
           </Provider>
         </ErrorBoundary>

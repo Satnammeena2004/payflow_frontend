@@ -16,14 +16,16 @@ const Request = ({
   currentPage,
   setCurrentPage,
 }: {
-  response: SWRResponse<FetchResponse<{ requests: RequestType[],count:number }>>;
+  response: SWRResponse<
+    FetchResponse<{ requests: RequestType[]; count: number }>
+  >;
   type: "Sent" | "Received"; // "sent" or "received"
   currentPage: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
-
+  const [isRequestLoading, setIsRequestLoading] = useState(false);
   const [modal, setModal] = useState(false);
   const user = useUser();
   const [error, setError] = useState("");
@@ -67,6 +69,7 @@ const Request = ({
       return;
     }
     try {
+      setIsRequestLoading(true);
       const { data } = await axiosInstance.patch<FetchResponse<null>>(
         "/request/reject/" + id
       );
@@ -82,6 +85,7 @@ const Request = ({
       setError("Failed to reject request");
     } finally {
       setRequestId("");
+      setIsRequestLoading(false);
     }
   }
   async function handleApproved(id: string) {
@@ -89,6 +93,7 @@ const Request = ({
       return;
     }
     try {
+      setIsRequestLoading(true);
       const { data } = await axiosInstance.patch<FetchResponse<null>>(
         "/request/approve/" + id,
         {
@@ -110,6 +115,7 @@ const Request = ({
       setError("Failed to approved request");
     } finally {
       setRequestId("");
+      setIsRequestLoading(false);
     }
   }
 
@@ -121,10 +127,11 @@ const Request = ({
   return (
     <div>
       <ConfirmationModal
+        isRequestLoading={isRequestLoading}
         isOpen={modal}
         onClose={onClose}
         onConfirm={() =>
-          requestType.type === "reject"
+          requestType.request_type === "reject"
             ? handleReject(requestId)
             : handleApproved(requestId)
         }
@@ -306,7 +313,17 @@ const Request = ({
                                 <button
                                   className="text-sm p-1 px-2 text-stone-50 bg-red-500 rounded-md"
                                   onClick={() => {
-                                    setRequestType("reject");
+                                    setRequestType(
+                                      (pre: RequestTypeForRequest) => ({
+                                        ...pre,
+                                        receiver_account_id:
+                                          request.requester_id.account_id,
+                                        sender_account_id:
+                                          user.data?.data?.user.account_id._id,
+                                        amount: request.amount,
+                                        request_type: "reject",
+                                      })
+                                    );
                                     handleClick(request._id);
                                   }}
                                 >

@@ -13,13 +13,14 @@ import {
   Edit,
   LucideGhost,
 } from "lucide-react";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useAuth } from "../context/Auth_Context";
 import { useOnline } from "../hooks/useOnline";
 import ErrorPage from "../pages/ErrorPage";
 import { MenuItems } from "../types";
 import LinkGenerator from "./Links";
 import { ThemeContext } from "../context/ThemeContext";
+import { useToggleMenu } from "../context/ToggleMenuContext";
 
 const menuItems: MenuItems[] = [
   {
@@ -45,7 +46,7 @@ const menuItems: MenuItems[] = [
 export default function Layout() {
   const { theme: t, setTheme } = useContext(ThemeContext);
   const { logout } = useAuth();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isMobileMenuOpen, setIsMobileMenuOpen } = useToggleMenu();
   const { theme } = useContext(ThemeContext);
   const isOnline = useOnline();
 
@@ -83,7 +84,7 @@ export default function Layout() {
         <div className="flex items-center justify-between px-4 py-4">
           <h1 className="text-xl font-bold text-indigo-600">PayFlow</h1>
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            onClick={() => setIsMobileMenuOpen?.(!isMobileMenuOpen)}
             className="p-2 text-gray-600 hover:text-gray-900"
           >
             {isMobileMenuOpen ? (
@@ -127,7 +128,7 @@ export default function Layout() {
       {/* Main Content */}
       <main className="lg:ml-64 min-h-screen pt-16 lg:pt-0   dark:bg-rich_black-950 relative ">
         <button
-          className={`scale-90 z-10 fixed right-0 top-0 w-8 h-8 bg-rich_black-900 flex justify-center items-center rounded-full $`}
+          className={`scale-90 z-10 fixed right-0 bottom-0 w-8 h-8 bg-rich_black-900 flex justify-center items-center rounded-full $`}
         >
           <LucideGhost
             className={"text-white"}

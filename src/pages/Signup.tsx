@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, User, Phone, AlertCircle } from "lucide-react";
 import { customFetchRequest } from "../constants/helper";
-import { AuthState } from "../context/Auth_Context";
 
 export default function Signup() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -13,7 +13,6 @@ export default function Signup() {
     confirmPassword: "",
   });
   const [error, setError] = useState("");
-  const { login } = useContext(AuthState);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     customFetchRequest(
@@ -28,7 +27,7 @@ export default function Signup() {
           setError(result.message);
         }
         setError("");
-        login();
+        navigate("/login", { replace: true });
       })
       .catch((err) => {
         // console.log(err);

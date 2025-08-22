@@ -1,4 +1,11 @@
-const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
+import { Loader2 } from "lucide-react";
+
+const ConfirmationModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  isRequestLoading,
+}) => {
   if (!isOpen) return null;
 
   return (
@@ -17,7 +24,11 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
             onClick={onConfirm}
             className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
           >
-            Confirm
+            {isRequestLoading ? (
+              <Loader2 className="animate-spin h-5 w-5" />
+            ) : (
+              "Confirm"
+            )}
           </button>
         </div>
       </div>

@@ -1,10 +1,16 @@
-import { createContext, ReactNode, SetStateAction, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from "react";
 
 type Theme = "dark" | "light";
 
 export const ThemeContext = createContext<{
   theme: Theme;
-  setTheme?: SetStateAction<Theme>;
+  setTheme?: Dispatch<SetStateAction<Theme>>;
 }>({
   theme: "light",
 });

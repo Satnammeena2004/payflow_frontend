@@ -1,24 +1,9 @@
-import { NavLink } from "react-router-dom";
 import { MenuItems } from "../types";
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import SingleLink from "./SingleLink";
 
-function SingleLink({ item }: { item: MenuItems }) {
-  return (
-    <NavLink
-      key={item.path}
-      to={item.path}
-      className={({ isActive }) =>
-        `flex text-sm indent-1 items-center px-4 py-3 dark:text-stone-200 text-rich_blue-700 rounded-lg hover:text-indigo-600 dark:hover:text-indigo-600 ${
-          isActive && "bg-rich_blue-600  !text-stone-50 hover:text-white"
-        } transition-colors`
-      }
-    >
-      <item.icon className="w-4  h-4 mr-1" />
-      {item.label}
-    </NavLink>
-  );
-}
+
 function ParentLInk({ item }: { item: MenuItems }) {
   const [show, setShow] = useState(false);
   return (

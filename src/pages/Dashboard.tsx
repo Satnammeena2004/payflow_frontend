@@ -100,7 +100,7 @@ export default function Dashboard() {
       {/* Recent Transactions */}
       <div
         className={`rounded-xl shadow-sm border border-gray-100  dark:shadow-sm   dark:border-none   dark:border-2 dark:border-rich_blue-600 ${
-          isLoading ? "dark:bg-zinc-800" : "dark:bg-white"
+          isLoading ? "dark:bg-zinc-800" : "dark:bg-white/20"
         }`}
       >
         <div className="p-6 border-b dark:border-none border-gray-100 bg-rich_blue-100 dark:bg-rich_black-900 rounded-t-xl ">
@@ -116,7 +116,7 @@ export default function Dashboard() {
               {" "}
               {transactions?.data?.transations.length === 0 ? (
                 <div className="border dark:border-none p-3 flex justify-center items-center h-40">
-                  <p className="w-fit text-xl font-medium text-gray-500/50 dark:bg-rich_black-200">
+                  <p className="w-fit text-xl font-medium text-gray-500/50 ">
                     No recent transactions
                   </p>
                 </div>

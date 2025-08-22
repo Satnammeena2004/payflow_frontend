@@ -7,7 +7,10 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
-  server:{
-    host:true
+  esbuild: {
+    drop: ['console', 'debugger'],
+  },
+  server: {
+    host: true
   }
 })
